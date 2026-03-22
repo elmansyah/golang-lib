@@ -6,6 +6,7 @@ import (
 	"errors"
 	"time"
 	
+	"github.com/elmansyah/golang-lib/connection/sshx"
 	"gorm.io/gorm"
 )
 
@@ -23,19 +24,9 @@ var (
 	errOpenDBNil           = errors.New("database connection is nil")
 )
 
-type SSHParams struct {
-	User       string
-	Password   string
-	RemoteHost string
-	KeyPath    string
-	LocalPort  int
-	RemotePort int
-}
-
 type Params struct {
 	Closed                 func() error
 	DB                     *gorm.DB
-	SSHParams              *SSHParams
 	Host                   string
 	User                   string
 	Password               string
@@ -43,6 +34,7 @@ type Params struct {
 	Timezone               string
 	AppMode                string
 	DBDriver               string
+	SSHParams              sshx.Params
 	Port                   int
 	MaxOpenConns           int
 	MaxIdleConns           int
