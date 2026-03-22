@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
 	
 	"gorm.io/gorm"
 )
@@ -11,7 +12,12 @@ import (
 type Init func(params *Params) App
 
 func New(params *Params) App {
-	return params.Setup()
+	connectDB, err := params.Setup()
+	if err != nil {
+		log.Fatalf("failed to setup DB: %v", err)
+	}
+	
+	return connectDB
 }
 
 func (params *Params) Get() *gorm.DB {

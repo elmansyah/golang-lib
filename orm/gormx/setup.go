@@ -6,13 +6,13 @@ import (
 	"github.com/elmansyah/golang-lib/connection/sshx"
 )
 
-func (params *Params) Setup() *Params {
+func (params *Params) Setup() (*Params, error) {
 	setupDB, err := connect(params)
 	if err != nil {
-		return params
+		return nil, err
 	}
 	
-	return setupDB
+	return setupDB, nil
 }
 
 func connect(params *Params) (*Params, error) {
