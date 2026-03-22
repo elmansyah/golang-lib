@@ -22,6 +22,7 @@ var (
 	errSSHTunnel           = errors.New("failed to establish SSH tunnel")
 	errFailedToOpenDB      = errors.New("failed to open database connection")
 	errOpenDBNil           = errors.New("database connection is nil")
+	errUnknownDBLocation   = errors.New("unknown database location")
 )
 
 type Params struct {
@@ -34,6 +35,8 @@ type Params struct {
 	Timezone               string
 	AppMode                string
 	DBDriver               string
+	DBLocation             string
+	DBTunnel               string
 	SSHParams              sshx.Params
 	Port                   int
 	MaxOpenConns           int

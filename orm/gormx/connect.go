@@ -38,7 +38,7 @@ func open(params *Params) (*gorm.DB, error) {
 
 func openByDriver(params *Params, logs logger.Interface) (*gorm.DB, error) {
 	switch params.DBDriver {
-	case "postgresql":
+	case "postgres":
 		return openPostgres(params, logs)
 	case "mysql":
 		return openMySQL(params, logs)
