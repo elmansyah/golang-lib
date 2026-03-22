@@ -14,7 +14,7 @@ type Init func(params *Params) App
 func New(params *Params) App {
 	connectDB, err := params.Setup()
 	if err != nil {
-		log.Fatalf("failed to setup DB: %v", err)
+		log.Fatalf("%v", err) //nolint:revive
 	}
 	
 	return connectDB
