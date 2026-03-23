@@ -1,6 +1,7 @@
 package godotenv
 
 import (
+	"fmt"
 	"os"
 	
 	"github.com/joho/godotenv"
@@ -12,16 +13,16 @@ func New() App {
 	return &Params{}
 }
 
-func (*Params) Load() string {
+func (*Params) Load() (string, error) {
 	if err := godotenv.Load(".env"); err != nil {
-		panic("failed to load .env: " + err.Error())
+		return "", fmt.Errorf("%w: %w", errLoadEnv, err)
 	}
 	
 	appMode := os.Getenv("APP_MODE")
 	
 	if appMode == "" {
-		panic("APP MODE environment variable is not set")
+		return "", fmt.Errorf("%w", errEmptyAppMode)
 	}
 	
-	return appMode
+	return appMode, nil
 }
