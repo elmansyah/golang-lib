@@ -10,7 +10,6 @@ var (
 	errValidateParams  = errors.New("invalid SSH connection parameters")
 	errLoadPrivateKey  = errors.New("failed to load private key")
 	errDialSSHServer   = errors.New("failed to dial SSH server")
-	errCloseListener   = errors.New("failed to close listener")
 )
 
 type Params struct {

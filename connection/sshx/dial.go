@@ -45,7 +45,7 @@ func validateParams(params *Params) error {
 	}
 	
 	if params.RemotePort == 0 {
-		err = append(err, fmt.Sprintf("SSH_PORT environment variable is not set: %s", params.RemotePort))
+		err = append(err, fmt.Sprintf("SSH_PORT environment variable is not set: %d", params.RemotePort))
 	}
 	
 	if len(err) > 0 {
@@ -84,5 +84,5 @@ func newSSHClientConfig(params *Params, signer ssh.Signer) (sshConfig *ssh.Clien
 }
 
 func dialSSHServer(params *Params, sshConfig *ssh.ClientConfig) (sshConnection *ssh.Client, err error) {
-	return ssh.Dial("tcp", fmt.Sprintf("%s:%s", params.RemoteHost, params.RemotePort), sshConfig) //nolint:wrapcheck
+	return ssh.Dial("tcp", fmt.Sprintf("%s:%d", params.RemoteHost, params.RemotePort), sshConfig) //nolint:wrapcheck
 }

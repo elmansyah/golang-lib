@@ -22,7 +22,8 @@ var (
 	errSSHTunnel           = errors.New("failed to establish SSH tunnel")
 	errFailedToOpenDB      = errors.New("failed to open database connection")
 	errOpenDBNil           = errors.New("database connection is nil")
-	errUnknownDBLocation   = errors.New("unknown database location")
+	errInvalidDBLocation   = errors.New("invalid DB_LOCATION")
+	errInvalidDBTunnel     = errors.New("invalid DB_TUNNEL")
 )
 
 type Params struct {

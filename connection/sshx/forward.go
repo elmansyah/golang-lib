@@ -12,7 +12,7 @@ func forward(params *Params, listener net.Listener, sshClient *ssh.Client) {
 	defer func(listener net.Listener) {
 		err := listener.Close()
 		if err != nil {
-			log.Printf("%w: %v", errCloseListener, err)
+			log.Printf("%v", err)
 		}
 	}(listener)
 	
@@ -22,10 +22,9 @@ func forward(params *Params, listener net.Listener, sshClient *ssh.Client) {
 			continue
 		}
 		
-		remoteConnection, err := sshClient.Dial("tcp", fmt.Sprintf("%s:%s", params.RemoteHost, params.RemotePort))
+		remoteConnection, err := sshClient.Dial("tcp", fmt.Sprintf("%s:%d", params.RemoteHost, params.RemotePort))
 		if err != nil {
 			err = localConnection.Close()
-			
 			if err != nil {
 				continue
 			}

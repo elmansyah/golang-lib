@@ -11,7 +11,7 @@ import (
 func listenLocal(params *Params, sshClient *ssh.Client) (net.Listener, error) {
 	listenConfig := net.ListenConfig{}
 	
-	listener, err := listenConfig.Listen(context.Background(), "tcp", fmt.Sprintf("localhost:%s", params.LocalPort))
+	listener, err := listenConfig.Listen(context.Background(), "tcp", fmt.Sprintf("localhost:%d", params.LocalPort))
 	if err != nil {
 		if closeErr := sshClient.Close(); closeErr != nil {
 			return nil, fmt.Errorf("listen error: %w; also failed to close SSH: %w", err, closeErr)

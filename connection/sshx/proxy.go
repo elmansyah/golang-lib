@@ -3,27 +3,34 @@ package sshx
 import (
 	"io"
 	"net"
+	"sync"
 )
 
 func proxyConn(localConn net.Conn, remoteConn net.Conn) {
-	defer localConn.Close()
-	defer remoteConn.Close()
+	defer localConn.Close()  //nolint:errcheck
+	defer remoteConn.Close() //nolint:errcheck
 	
-	done := make(chan struct{}, 2)
+	var group sync.WaitGroup
+	
+	group.Add(2) //nolint:mnd
 	
 	go func() {
-		_, _ = io.Copy(remoteConn, localConn)
+		defer group.Done()
+		
+		_, _ = io.Copy(remoteConn, localConn) //nolint:errcheck
+		
 		closeWrite(remoteConn)
-		done <- struct{}{}
 	}()
 	
 	go func() {
-		_, _ = io.Copy(localConn, remoteConn)
+		defer group.Done()
+		
+		_, _ = io.Copy(localConn, remoteConn) //nolint:errcheck
+		
 		closeWrite(localConn)
-		done <- struct{}{}
 	}()
 	
-	<-done
+	group.Wait()
 }
 
 func closeWrite(conn net.Conn) {
@@ -32,9 +39,16 @@ func closeWrite(conn net.Conn) {
 	}
 	
 	if cw, ok := conn.(closeWriter); ok {
-		_ = cw.CloseWrite()
+		err := cw.CloseWrite()
+		if err != nil {
+			return
+		}
+		
 		return
 	}
 	
-	_ = conn.Close()
+	err := conn.Close()
+	if err != nil {
+		return
+	}
 }
