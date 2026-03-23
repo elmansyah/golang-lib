@@ -38,12 +38,12 @@ type Params struct {
 	DBDriver               string
 	DBLocation             string
 	DBTunnel               string
+	SSLMode                string
 	SSHParams              sshx.Params
 	Port                   int
 	MaxOpenConns           int
 	MaxIdleConns           int
 	ConnMaxLifetime        time.Duration
-	SSLMode                bool
 	SkipDefaultTransaction bool
 	TranslateError         bool
 	Encrypt                bool
