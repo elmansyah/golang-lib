@@ -10,7 +10,7 @@ import (
 
 func openPostgres(params *Params, logs logger.Interface) (*gorm.DB, error) {
 	dsn := fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%d sslmode=%t TimeZone=%s",
+		"host=%s user=%s password=%s dbname=%s port=%d sslmode=%s TimeZone=%s",
 		params.Host,
 		params.User,
 		params.Password,
