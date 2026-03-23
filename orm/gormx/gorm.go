@@ -4,20 +4,19 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"log"
 	
 	"gorm.io/gorm"
 )
 
-type Init func(params *Params) App
+type Init func(params *Params) (App, error)
 
-func New(params *Params) App {
+func New(params *Params) (App, error) {
 	connectDB, err := params.Setup()
 	if err != nil {
-		log.Fatalf("%v", err) //nolint:revive
+		return nil, err
 	}
 	
-	return connectDB
+	return connectDB, nil
 }
 
 func (params *Params) Get() *gorm.DB {
